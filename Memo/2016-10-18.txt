@@ -1,0 +1,40 @@
+2016-10-18 ドットインストールを見ながら Rails アプリを作ってみる。
+
+# Ruby と Rails の環境は以下のとおり。
+$ ruby -v
+ruby 2.2.3p173 (2015-08-18 revision 51636) [x64-mingw32]
+$ rails -v
+Rails 4.2.5
+
+# GitHub リポジトリを作って git clone することでフォルダを作っておく。
+$ git clone https://github.com/Neos21GitHub/DotInstallRails.git
+
+# P:/Dev/Ruby/GitHub/DotInstallRails/ という構成になっている。
+# GitHub フォルダ上で以下のコマンドで Rails アプリを作る。
+# 作成済みの DotInstallRails フォルダ内にファイルが生成されていく。
+$ rails new DotInstallRails
+
+# しかし以下のようなエラーが発生。
+Fetching source index from https://rubygems.org/
+Could not verify the SSL certificate for https://rubygems.org/.
+There is a chance you are experiencing a man-in-the-middle attack, but most likely your system doesn't have the CA certificates needed for verification. For information about OpenSSL certificates, see bit.ly/ruby-ssl. To connect without using SSL, edit your Gemfile
+sources and change 'https' to 'http'.
+
+# 色々調べたところ、SSL 認証のためのファイルを特定のフォルダ配下に置いておくと直るらしい。
+# - http://curl.haxx.se/ca/cacert.pem
+#   このファイルを以下に置く。
+#   C:\Ruby22-x64\lib\ruby\2.2.0\rubygems\ssl_certs\ ← cacert.pem
+# - 参考：[bundle install が https で失敗する](http://fragile.g.hatena.ne.jp/asane/20130806/p1)
+# - 参考：[rubygems.orgにSSL接続するまでにほぼ24時間迷走した話。](http://rubylearner.hatenablog.jp/entry/2014/12/07/220406)
+
+# ファイルを置いたら再度 Bundle Install する。上手く行った。
+$ cd DotInstallRails
+$ bundle install
+
+# これで必要なファイルが生成できた。
+# サーバを起動してみる。「rails s」でも良し。
+$ rails server
+=> Rails 4.2.5 application starting in development on http://localhost:3000
+
+# エラーが出た時は JavaScript ランタイムがどうのってやつらしい。
+# Gemfile を修正する。ドットインストール参照。今回は出なかった。
