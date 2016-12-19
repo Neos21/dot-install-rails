@@ -53,3 +53,99 @@ $ rake db:migrate
 $ rails s
 
 # http://localhost:3000/users/ でアクセス可能
+
+
+
+# 05 タスク管理アプリを作ってみよう
+
+# 一旦 DotInstallRails 配下を全消しして Rails アプリを作り直し
+$ rails new DotInstallRails
+
+# 今度は Gemfile の therubyracer を有効にしてみた
+$ bundle install
+# ココで以下のようなエラーが出た
+Fetching source index from https://rubygems.org/
+Could not verify the SSL certificate for
+https://rubygems.org/quick/Marshal.4.8/sqlite3-0.0.0.gemspec.rz.
+There is a chance you are experiencing a man-in-the-middle attack, but most
+likely your system doesn't have the CA certificates needed for verification. For
+information about OpenSSL certificates, see "bit.ly/ruby-ssl". To connect
+without using SSL, edit your Gemfile sources and change 'https' to 'http'.
+
+# 以下のサイトを参考に変更してみる
+# http://stackoverflow.com/questions/40182126/ruby-on-rails-ssl-issue-with-windows-10
+$ gem source -r https://rubygems.org/
+$ gem source -a http://rubygems.org/
+$ gem update
+
+# 長いこと待って色々 Override してうまくいった。
+$ bundle install
+Bundle complete! 13 Gemfile dependencies, 56 gems now installed.
+Use `bundle show [gemname]` to see where a bundled gem is installed.
+
+# モデルを作る
+$ rails generate model Project title:string 
+# - rails g で OK
+# - モデルは大文字から・単数形
+# - 型のデフォルトは string なので「title」のみで OK
+# → rails g model Project title
+
+# 色々できたら DB マイグレーション
+$ rake db:migrate
+
+
+
+# 06 Rails DB・Rails Console を使おう
+
+# DB にアクセスできる
+$ rails db
+
+# 以下でテーブル一覧
+$ sqlite> .schema
+
+# こんな風に検索できる
+sqlite> SELECT * FROM projects;
+
+# 閉じる
+sqlite> .exit
+
+# コンソールでモデルをインタラクティブに操作できる
+$ rails console
+
+# プロジェクトを作ってみる
+irb(main):001:0> p = Project.new(title: "p1")
+=> #<Project id: nil, title: "p1", created_at: nil, updated_at: nil>
+
+# 保存する
+irb(main):002:0> p.save
+   (0.0ms)  begin transaction
+  SQL (494.1ms)  INSERT INTO "projects" ("title", "created_at", "updated_at") VALUES (?, ?, ?)  [["title", "p1"], ["created_at", "2016-12-19 08:15:20.841930"], ["updated_at", "2016-12-19 08:15:20.841930"]]
+   (95.5ms)  commit transaction
+=> true
+
+# 閲覧する
+irb(main):003:0> p
+=> #<Project id: 1, title: "p1", created_at: "2016-12-19 08:15:20", updated_at: "2016-12-19 08:15:20">
+
+# new と save を同時にやる
+irb(main):004:0> Project.create(title: "p2")
+   (0.0ms)  begin transaction
+  SQL (475.6ms)  INSERT INTO "projects" ("title", "created_at", "updated_at") VALUES (?, ?, ?)  [["title", "p2"], ["created_at", "2016-12-19 08:16:37.438988"], ["updated_at", "2016-12-19 08:16:37.438988"]]
+   (73.0ms)  commit transaction
+=> #<Project id: 2, title: "p2", created_at: "2016-12-19 08:16:37", updated_at: "2016-12-19 08:16:37">
+
+# 全部見てみる
+irb(main):005:0> Project.all
+  Project Load (0.0ms)  SELECT "projects".* FROM "projects"
+=> #<ActiveRecord::Relation [#<Project id: 1, title: "p1", created_at: "2016-12-19 08:15:20", updated_at: "2016-12-19 08:15:20">, #<Project id: 2, title: "p2", created_at: "2016-12-19 08:16:37", updated_at: "2016-12-19 08:16:37">]>
+
+# 閉じる
+irb(main):006:0> quit
+
+# DB で見てみる
+$ rails db
+SQLite version 3.10.0 2016-01-06 11:01:07
+Enter ".help" for usage hints.
+sqlite> SELECT * FROM projects;
+1|p1|2016-12-19 08:15:20.841930|2016-12-19 08:15:20.841930
+2|p2|2016-12-19 08:16:37.438988|2016-12-19 08:16:37.438988
