@@ -1,5 +1,9 @@
 2016-10-18 ドットインストールを見ながら Rails アプリを作ってみる。
 
+
+
+# 03 はじめての Ruby On Rails
+
 # Ruby と Rails の環境は以下のとおり。
 $ ruby -v
 ruby 2.2.3p173 (2015-08-18 revision 51636) [x64-mingw32]
@@ -37,4 +41,9 @@ $ rails server
 => Rails 4.2.5 application starting in development on http://localhost:3000
 
 # エラーが出た時は JavaScript ランタイムがどうのってやつらしい。
-# Gemfile を修正する。ドットインストール参照。今回は出なかった。
+# Gemfile を修正する。今回は出なかった。
+$ vi Gemfile
+  # gem 'therubyracer', platforms: :ruby
+  の行のコメントアウトを解除
+# 再度インストールしてから rails s する
+$ bundle install
