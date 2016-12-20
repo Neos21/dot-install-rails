@@ -27,6 +27,9 @@ http://localhost:3000/projects/ ではなく、http://localhost:3000/ で開け�
     リンク先のパスは <%= link_to "Home", "/" %> と書いても良いが、
     「rake routes」で確認できる「Prefix」に「_path」を付けることでも遷移できる。
     「/projects」に遷移したいのであれば「projects_path」で飛べる。
+        Prefix Verb   URI Pattern                  Controller#Action
+      projects GET    /projects(.:format)          projects#index
+            ↑この後ろに _path を付ける。
 - ERB におけるコメントは「<%#」から行末まで、ではなく、「<%#」から最後の「%>」までなので
     <%#
       こうやって
@@ -38,3 +41,35 @@ http://localhost:3000/projects/ ではなく、http://localhost:3000/ で開け�
 - /app/assets/javascripts/application.js
 - /app/assets/stylesheets/application.css
 も共通ファイル。
+
+
+
+# 11 Projects の詳細を表示しよう
+
+/app/assets/views/projects/index.html.erb から詳細画面へのリンクを作る。
+
+  <li><%= project.title %></li>
+
+この部分を rake routes で確認できる定義に沿ってリンクにする。
+
+   Prefix Verb   URI Pattern                  Controller#Action
+  project GET    /projects/:id(.:format)      projects#show
+
+  <li><%= link_to project.title, project_path(project.id) %></li>
+          link_to ↑テキスト   , ↑上記 URI Pattern に沿って、project_path に id を渡す
+
+リンク先の画面は、上記ルーティングから、/app/controllers/projects_controller.rb に show メソッドを作る必要があると分かる。
+
+  # ShowAction
+  def show
+    # URL で渡された値は params[シンボル] で取得可能
+    # シンボル :id は rake routes で確認できる URI Pattern にて定義されている
+    @project = Project.find(params[:id])
+  end
+
+そしてこれに対応する View を /app/views/projects/show.html.erb として作る。
+
+  <%# projects#show に対応する View %>
+  <h1><%= @project.title %></h1>
+
+これでプロジェクト一覧からリンクを押下して詳細画面に遷移するところまでができた。
