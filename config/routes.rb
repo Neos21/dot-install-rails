@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   # プロジェクトのルーティングを自動生成させる
   resources :projects
   
+  # ルートのアクションを対応付ける
+  root 'projects#index'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

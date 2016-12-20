@@ -1,0 +1,14 @@
+2016-12-21 続き
+
+
+
+# 09 Root の設定をしよう
+
+ルーティング (URL と Action の対応付け) を整理する。
+http://localhost:3000/projects/ ではなく、http://localhost:3000/ で開けるようにしたい。
+
+/config/routes.rb に以下を追加する。
+
+  # ルートのアクションを対応付ける
+  root 'projects#index'
+
