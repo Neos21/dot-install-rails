@@ -42,4 +42,36 @@ edit_project GET    /projects/:id/edit(.:format) projects#edit
              PATCH  /projects/:id(.:format)      projects#update
              PUT    /projects/:id(.:format)      projects#update
              DELETE /projects/:id(.:format)      projects#destroy
-#                   アクセスする URL             「projects_controller の IndexAction に処理を書く」
+#                   アクセスする URL             「projects_controller.rb に def index = IndexAction を作りそこに処理を書く」
+
+
+
+# 08 Projects の一覧を表示させよう
+
+上記の Routes のうち、projects#index を作っていく。
+
+/app/controllers/projects_controller.rb を開く。
+
+  # IndexAction を作る
+  def index
+    # @projects は View で使用する変数
+    # Project.all で全件取得
+    @projects = Project.all
+  end
+
+対応する View は以下のとおりに作る。
+/app/views/projects/ 配下に index.html.erb と作る。
+Controller・Action と同名になるように作る。
+
+  <%# projects#index に対応する View %>
+  <h1>Projects</h1>
+  <ul>
+    <%# ループを回す %>
+    <% @projects.each do |project| %>
+      <li><%= project.title %></li>
+    <% end %>
+  </ul>
+
+# サーバを立ち上げて動作確認
+$ rails s
+# http://localhost:3000/projects/ で確認できる。

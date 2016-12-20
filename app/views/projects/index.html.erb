@@ -1,0 +1,9 @@
+<%# projects#index に対応する View %>
+<h1>Projects</h1>
+
+<ul>
+  <%# ループを回す %>
+  <% @projects.each do |project| %>
+    <li><%= project.title %></li>
+  <% end %>
+</ul>
