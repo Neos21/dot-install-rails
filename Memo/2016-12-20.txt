@@ -1,0 +1,45 @@
+2016-12-20 続き
+
+
+
+# 07 Controller を作ってみよう
+
+- Model は「rails g model (モデル名・パスカルケース単数形)」で作れた。
+- rails db で DB を操作したり、rails console でインタラクティブにモデルを操作したりした。
+
+# コントローラーは複数形で作る
+$ rails g controller Projects
+Expected string default value for '--jbuilder'; got true (boolean)
+Expected string default value for '--helper'; got true (boolean)
+Expected string default value for '--assets'; got true (boolean)
+      create  app/controllers/projects_controller.rb
+      invoke  erb
+      create    app/views/projects
+      invoke  test_unit
+      create    test/controllers/projects_controller_test.rb
+      invoke  helper
+      create    app/helpers/projects_helper.rb
+      invoke    test_unit
+      invoke  assets
+      invoke    coffee
+      create      app/assets/javascripts/projects.coffee
+      invoke    scss
+      create      app/assets/stylesheets/projects.scss
+# なんか警告っぽいの出たけど無視
+
+/config/routes.rb を開き以下の行を追加する
+      # プロジェクトのルーティングを自動生成させる
+      resources :projects
+
+# ルーティングの設定を反映させる
+$ rake routes
+      Prefix Verb   URI Pattern                  Controller#Action
+    projects GET    /projects(.:format)          projects#index
+             POST   /projects(.:format)          projects#create
+ new_project GET    /projects/new(.:format)      projects#new
+edit_project GET    /projects/:id/edit(.:format) projects#edit
+     project GET    /projects/:id(.:format)      projects#show
+             PATCH  /projects/:id(.:format)      projects#update
+             PUT    /projects/:id(.:format)      projects#update
+             DELETE /projects/:id(.:format)      projects#destroy
+#                   アクセスする URL             「projects_controller の IndexAction に処理を書く」
