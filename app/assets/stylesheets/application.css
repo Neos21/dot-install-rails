@@ -13,3 +13,9 @@
  *= require_tree .
  *= require_self
  */
+
+/* 共通スタイルシート */
+
+body {
+  background:#f0f0f0;
+}

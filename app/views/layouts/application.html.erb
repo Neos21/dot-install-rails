@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>DotInstallRails</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+  <head>
+    <%# これが共通テンプレート %>
+    <title>DotInstallRails</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
 
+<%# image_tag : /app/assets/images/ を参照するヘルパー。画像は GIMP で 200x40px で適当に作った %>
+<%= image_tag "logo.png" %>
+
+<%# 各 View の中身は Yield に反映される %>
 <%= yield %>
 
-</body>
+<%#
+  link_to : リンクを貼れるヘルパー。
+  リンク先のパスは「"/"」と書いても良いが、
+  「rake routes」で確認できる「Prefix」に「_path」を付けることでも遷移できる。
+  「/projects」に遷移したいのであれば「projects_path」で飛べる。
+%>
+<%= link_to "Home", projects_path %>
+
+  </body>
 </html>

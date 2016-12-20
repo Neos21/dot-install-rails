@@ -12,3 +12,29 @@ http://localhost:3000/projects/ ではなく、http://localhost:3000/ で開け�
   # ルートのアクションを対応付ける
   root 'projects#index'
 
+
+
+# 10 共通テンプレートを編集しよう
+
+/app/views/layouts/application.html.erb が共通テンプレート。
+
+- <%= yield %>
+    各 View の中身は Yield に反映される。
+- <%= image_tag "logo.png" %>
+    /app/assets/images/ を参照するヘルパー。
+- <%= link_to "Home", projects_path %>
+    リンクを貼れるヘルパー。
+    リンク先のパスは <%= link_to "Home", "/" %> と書いても良いが、
+    「rake routes」で確認できる「Prefix」に「_path」を付けることでも遷移できる。
+    「/projects」に遷移したいのであれば「projects_path」で飛べる。
+- ERB におけるコメントは「<%#」から行末まで、ではなく、「<%#」から最後の「%>」までなので
+    <%#
+      こうやって
+      複数行コメントにも
+      できる。
+    %>
+
+同様に、
+- /app/assets/javascripts/application.js
+- /app/assets/stylesheets/application.css
+も共通ファイル。
