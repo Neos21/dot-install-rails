@@ -1,0 +1,18 @@
+<%# projects#new に対応する View %>
+<h1>Add New</h1>
+
+<%# Controller の #new で指定したインスタンス変数 @project を使った Form %>
+<%= form_for @project do |f| %>
+  
+  <%# ラベルとテキストボックス %>
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+  
+  <%# Submit ボタン %>
+  <p>
+    <%= f.submit %>
+  </p>
+  
+<% end %>

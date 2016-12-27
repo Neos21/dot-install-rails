@@ -14,4 +14,9 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
   
+  # NewAction
+  def new
+    @project = Project.new
+  end
+  
 end
