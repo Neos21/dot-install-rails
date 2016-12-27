@@ -19,4 +19,22 @@ class ProjectsController < ApplicationController
     @project = Project.new
   end
   
+  # CreateAction
+  def create
+    # Form から情報を取得する。project_params はプライベート関数
+    @project = Project.new(project_params)
+    # DB に保存する
+    @project.save
+    # redirect_to に Path を付けることでリダイレクトする
+    redirect_to projects_path
+  end
+  
+  # プライベート宣言
+  private
+    # Create 用のパラメータを扱うプライベート関数
+    def project_params
+      # params 中の project の中にある title の受取を許可する
+      params[:project].permit(:title)
+    end
+  
 end
