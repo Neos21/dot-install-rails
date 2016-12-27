@@ -23,10 +23,14 @@ class ProjectsController < ApplicationController
   def create
     # Form から情報を取得する。project_params はプライベート関数
     @project = Project.new(project_params)
-    # DB に保存する
-    @project.save
-    # redirect_to に Path を付けることでリダイレクトする
-    redirect_to projects_path
+    # DB に保存する : save の際に Models の Validation が行われる。save が成功したらトップにリダイレクトする
+    if @project.save
+      # redirect_to に Path を付けることでリダイレクトする
+      redirect_to projects_path
+    else
+      # Validation により保存に失敗したら新規登録画面を再度開く
+      render 'new'
+    end
   end
   
   # プライベート宣言

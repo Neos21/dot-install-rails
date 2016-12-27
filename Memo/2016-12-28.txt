@@ -62,6 +62,40 @@ POST で #create する処理を作る。
 
 private 宣言以降はプライベートな関数になる。
 
-project_params 関数は HTTP リクエスト中の特定のパラメータのみ受け取ることを許可する書き方。
+project_params 関数は HTTP リクエスト中の特定のパラメータのみフィルタリングして受け取ることを許可する書き方。
 StrongParameters という仕組みらしい。
 https://www.transnet.ne.jp/2016/05/18/rails%E5%88%9D%E5%AD%A6%E8%80%85%E3%82%B9%E3%83%88%E3%83%AD%E3%83%B3%E3%82%B0%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BCcolnr/
+
+
+
+そういえば DB の場所ってどうなってるんだっけ？
+
+- http://q.hatena.ne.jp/1319859714
+
+/config/database.yml に記載あり。
+/db/ 配下にあるのがそれで、現時点では /db/development.sqlite3 のみが物理 DB ファイルとして存在している。
+
+
+
+# 14 Validation を設定しよう
+
+Model の中で Validation を定義する。
+
+/app/models/project.rb を開き以下を追加。
+
+  # Title を必須入力とする Validation
+  validates :title, presence: true
+
+これだけで、未入力の状態だと登録はされなくなったが、何のメッセージもなく一覧画面に戻ってしまう。
+/app/controllers/projects_controller.rb を以下のように直す。
+
+  # DB に保存する : save の際に Models の Validation が行われる。save が成功したらトップにリダイレクトする
+  if @project.save
+    # redirect_to に Path を付けることでリダイレクトする
+    redirect_to projects_path
+  else
+    # Validation により保存に失敗したら新規登録画面を再度開く
+    render 'new'
+  end
+
+これで未入力の際は新規登録画面が再描画されるようになった。
