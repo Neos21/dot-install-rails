@@ -33,6 +33,11 @@ class ProjectsController < ApplicationController
     end
   end
   
+  # EditAction
+  def edit
+    @project = Project.find(params[:id])
+  end
+  
   # プライベート宣言
   private
     # Create 用のパラメータを扱うプライベート関数
