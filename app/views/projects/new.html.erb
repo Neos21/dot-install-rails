@@ -1,31 +1,9 @@
 <%# projects#new に対応する View %>
 <h1>Add New</h1>
 
-<%# Controller の #new で指定したインスタンス変数 @project を使った Form %>
-<%= form_for @project do |f| %>
-  
-  <%# ラベルとテキストボックス %>
-  <p>
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-    
-    <%# Validation でエラーになった場合、errors 内にその情報が入る %>
-    <% if @project.errors.any? %>
-      <%#
-        &lt;%= @project.errors.inspect %&gt; で中身が分かる。
-        #&lt;ActiveModel::Errors:0x0000000c8fb428 @base=#&lt;Project id: nil, title: "", created_at: nil, updated_at: nil&gt;, @messages={:title=&gt;["can't be blank"]}&gt;
-        このようなものが入っていると分かる。そこで、
-        &lt;%= @project.errors.messages[:title][0] %&gt;
-        とすることで、@messages 内のキー :title 内の配列の最初を取得できる。
-        メッセージは Model の Validation 部分で変更できる。
-      %>
-      <%= @project.errors.messages[:title][0] %>
-    <% end %>
-  </p>
-  
-  <%# Submit ボタン %>
-  <p>
-    <%= f.submit %>
-  </p>
-  
-<% end %>
+<%#
+  Form を共通化する。
+  View 内の render は部分テンプレート (パーシャル) を表示できる。
+  部分テンプレートはアンダースコア始まりのファイル名 (_form.html.erb) にする。
+%>
+<%= render 'form' %>

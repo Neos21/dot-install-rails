@@ -38,6 +38,16 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
   
+  # UpdateAction
+  def update
+    @project = Project.find(params[:id])
+    if @project.update(project_params)
+      redirect_to projects_path
+    else
+      render 'edit'
+    end
+  end
+  
   # プライベート宣言
   private
     # Create 用のパラメータを扱うプライベート関数
