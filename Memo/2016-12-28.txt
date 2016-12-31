@@ -2,131 +2,131 @@
 
 
 
-# 12 V‹Kì¬ƒtƒH[ƒ€‚ğì‚ë‚¤
+# 12 æ–°è¦ä½œæˆãƒ•ã‚©ãƒ¼ãƒ ã‚’ä½œã‚ã†
 
-http://localhost:3000/rails/info/routes/ ‚Åƒ‹[ƒeƒBƒ“ƒO‚ÌŠm”F‚ª‚Å‚«‚éB
+http://localhost:3000/rails/info/routes/ ã§ãƒ«ãƒ¼ãƒ†ã‚£ãƒ³ã‚°ã®ç¢ºèªãŒã§ãã‚‹ã€‚
 
-‚Ü‚¸ /app/views/projects/index.html.erb ‚ÉAV‹K“o˜^‰æ–Ê‚É”ò‚ÔƒŠƒ“ƒN‚ğì‚éB
+ã¾ãš /app/views/projects/index.html.erb ã«ã€æ–°è¦ç™»éŒ²ç”»é¢ã«é£›ã¶ãƒªãƒ³ã‚¯ã‚’ä½œã‚‹ã€‚
 
   <p><%= link_to "Add New", new_project_path %></p>
 
-Ÿ‚ÉƒRƒ“ƒgƒ[ƒ‰‚ğì‚éB/app/controllers/projects_controller.rb ‚ÉˆÈ‰º‚ğ’Ç‰ÁB
+æ¬¡ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã‚’ä½œã‚‹ã€‚/app/controllers/projects_controller.rb ã«ä»¥ä¸‹ã‚’è¿½åŠ ã€‚
 
   # NewAction
   def new
     @project = Project.new
   end
 
-Ÿ‚É‘Î‰‚·‚é View ‚Å Form ‚ğì‚éB/app/views/projects/new.html.erb ‚ğì‚èˆÈ‰º‚Ì‚æ‚¤‚ÉƒR[ƒfƒBƒ“ƒOB
+æ¬¡ã«å¯¾å¿œã™ã‚‹ View ã§ Form ã‚’ä½œã‚‹ã€‚/app/views/projects/new.html.erb ã‚’ä½œã‚Šä»¥ä¸‹ã®ã‚ˆã†ã«ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã€‚
 
-  <%# Controller ‚Ì #new ‚Åw’è‚µ‚½ƒCƒ“ƒXƒ^ƒ“ƒX•Ï” @project ‚ğg‚Á‚½ Form %>
+  <%# Controller ã® #new ã§æŒ‡å®šã—ãŸã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å¤‰æ•° @project ã‚’ä½¿ã£ãŸ Form %>
   <%= form_for @project do |f| %>
-    <%# ƒ‰ƒxƒ‹‚ÆƒeƒLƒXƒgƒ{ƒbƒNƒX %>
+    <%# ãƒ©ãƒ™ãƒ«ã¨ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ %>
     <p>
       <%= f.label :title %><br>
       <%= f.text_field :title %>
     </p>
-    <%# Submit ƒ{ƒ^ƒ“ %>
+    <%# Submit ãƒœã‚¿ãƒ³ %>
     <p>
       <%= f.submit %>
     </p>
   <% end %>
 
-‚±‚ê‚Å http://localhost:3000/projects/new ƒy[ƒW‚ª‚Å‚«‚½B
+ã“ã‚Œã§ http://localhost:3000/projects/new ãƒšãƒ¼ã‚¸ãŒã§ããŸã€‚
 
 
 
-# 13 ƒf[ƒ^‚ğ•Û‘¶‚µ‚Ä‚İ‚æ‚¤
+# 13 ãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜ã—ã¦ã¿ã‚ˆã†
 
-POST ‚Å #create ‚·‚éˆ—‚ğì‚éB
+POST ã§ #create ã™ã‚‹å‡¦ç†ã‚’ä½œã‚‹ã€‚
 
-/app/controllers/projects_controller.rb ‚ÉˆÈ‰º‚ğ’Ç‰ÁB
+/app/controllers/projects_controller.rb ã«ä»¥ä¸‹ã‚’è¿½åŠ ã€‚
 
   # CreateAction
   def create
-    # Form ‚©‚çî•ñ‚ğæ“¾‚·‚éBproject_params ‚Íƒvƒ‰ƒCƒx[ƒgŠÖ”
+    # Form ã‹ã‚‰æƒ…å ±ã‚’å–å¾—ã™ã‚‹ã€‚project_params ã¯ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆé–¢æ•°
     @project = Project.new(project_params)
-    # DB ‚É•Û‘¶‚·‚é
+    # DB ã«ä¿å­˜ã™ã‚‹
     @project.save
-    # redirect_to ‚É Path ‚ğ•t‚¯‚é‚±‚Æ‚ÅƒŠƒ_ƒCƒŒƒNƒg‚·‚é
+    # redirect_to ã« Path ã‚’ä»˜ã‘ã‚‹ã“ã¨ã§ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã™ã‚‹
     redirect_to projects_path
   end
   
-  # ƒvƒ‰ƒCƒx[ƒgéŒ¾
+  # ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆå®£è¨€
   private
-    # Create —p‚Ìƒpƒ‰ƒ[ƒ^‚ğˆµ‚¤ƒvƒ‰ƒCƒx[ƒgŠÖ”
+    # Create ç”¨ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’æ‰±ã†ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆé–¢æ•°
     def project_params
-      # params ’†‚Ì project ‚Ì’†‚É‚ ‚é title ‚Ìóæ‚ğ‹–‰Â‚·‚é
+      # params ä¸­ã® project ã®ä¸­ã«ã‚ã‚‹ title ã®å—å–ã‚’è¨±å¯ã™ã‚‹
       params[:project].permit(:title)
     end
 
-private éŒ¾ˆÈ~‚Íƒvƒ‰ƒCƒx[ƒg‚ÈŠÖ”‚É‚È‚éB
+private å®£è¨€ä»¥é™ã¯ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆãªé–¢æ•°ã«ãªã‚‹ã€‚
 
-project_params ŠÖ”‚Í HTTP ƒŠƒNƒGƒXƒg’†‚Ì“Á’è‚Ìƒpƒ‰ƒ[ƒ^‚Ì‚İƒtƒBƒ‹ƒ^ƒŠƒ“ƒO‚µ‚Äó‚¯æ‚é‚±‚Æ‚ğ‹–‰Â‚·‚é‘‚«•ûB
-StrongParameters ‚Æ‚¢‚¤d‘g‚İ‚ç‚µ‚¢B
+project_params é–¢æ•°ã¯ HTTP ãƒªã‚¯ã‚¨ã‚¹ãƒˆä¸­ã®ç‰¹å®šã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®ã¿ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ã—ã¦å—ã‘å–ã‚‹ã“ã¨ã‚’è¨±å¯ã™ã‚‹æ›¸ãæ–¹ã€‚
+StrongParameters ã¨ã„ã†ä»•çµ„ã¿ã‚‰ã—ã„ã€‚
 https://www.transnet.ne.jp/2016/05/18/rails%E5%88%9D%E5%AD%A6%E8%80%85%E3%82%B9%E3%83%88%E3%83%AD%E3%83%B3%E3%82%B0%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E3%83%BCcolnr/
 
 
 
-‚»‚¤‚¢‚¦‚Î DB ‚ÌêŠ‚Á‚Ä‚Ç‚¤‚È‚Á‚Ä‚é‚ñ‚¾‚Á‚¯H
+ãã†ã„ãˆã° DB ã®å ´æ‰€ã£ã¦ã©ã†ãªã£ã¦ã‚‹ã‚“ã ã£ã‘ï¼Ÿ
 
 - http://q.hatena.ne.jp/1319859714
 
-/config/database.yml ‚É‹LÚ‚ ‚èB
-/db/ ”z‰º‚É‚ ‚é‚Ì‚ª‚»‚ê‚ÅAŒ»“_‚Å‚Í /db/development.sqlite3 ‚Ì‚İ‚ª•¨— DB ƒtƒ@ƒCƒ‹‚Æ‚µ‚Ä‘¶İ‚µ‚Ä‚¢‚éB
+/config/database.yml ã«è¨˜è¼‰ã‚ã‚Šã€‚
+/db/ é…ä¸‹ã«ã‚ã‚‹ã®ãŒãã‚Œã§ã€ç¾æ™‚ç‚¹ã§ã¯ /db/development.sqlite3 ã®ã¿ãŒç‰©ç† DB ãƒ•ã‚¡ã‚¤ãƒ«ã¨ã—ã¦å­˜åœ¨ã—ã¦ã„ã‚‹ã€‚
 
 
 
-# 14 Validation ‚ğİ’è‚µ‚æ‚¤
+# 14 Validation ã‚’è¨­å®šã—ã‚ˆã†
 
-Model ‚Ì’†‚Å Validation ‚ğ’è‹`‚·‚éB
+Model ã®ä¸­ã§ Validation ã‚’å®šç¾©ã™ã‚‹ã€‚
 
-/app/models/project.rb ‚ğŠJ‚«ˆÈ‰º‚ğ’Ç‰ÁB
+/app/models/project.rb ã‚’é–‹ãä»¥ä¸‹ã‚’è¿½åŠ ã€‚
 
-  # Title ‚ğ•K{“ü—Í‚Æ‚·‚é Validation
+  # Title ã‚’å¿…é ˆå…¥åŠ›ã¨ã™ã‚‹ Validation
   validates :title, presence: true
 
-‚±‚ê‚¾‚¯‚ÅA–¢“ü—Í‚Ìó‘Ô‚¾‚Æ“o˜^‚Í‚³‚ê‚È‚­‚È‚Á‚½‚ªA‰½‚ÌƒƒbƒZ[ƒW‚à‚È‚­ˆê——‰æ–Ê‚É–ß‚Á‚Ä‚µ‚Ü‚¤B
-/app/controllers/projects_controller.rb ‚ğˆÈ‰º‚Ì‚æ‚¤‚É’¼‚·B
+ã“ã‚Œã ã‘ã§ã€æœªå…¥åŠ›ã®çŠ¶æ…‹ã ã¨ç™»éŒ²ã¯ã•ã‚Œãªããªã£ãŸãŒã€ä½•ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚‚ãªãä¸€è¦§ç”»é¢ã«æˆ»ã£ã¦ã—ã¾ã†ã€‚
+/app/controllers/projects_controller.rb ã‚’ä»¥ä¸‹ã®ã‚ˆã†ã«ç›´ã™ã€‚
 
-  # DB ‚É•Û‘¶‚·‚é : save ‚ÌÛ‚É Models ‚Ì Validation ‚ªs‚í‚ê‚éBsave ‚ª¬Œ÷‚µ‚½‚çƒgƒbƒv‚ÉƒŠƒ_ƒCƒŒƒNƒg‚·‚é
+  # DB ã«ä¿å­˜ã™ã‚‹ : save ã®éš›ã« Models ã® Validation ãŒè¡Œã‚ã‚Œã‚‹ã€‚save ãŒæˆåŠŸã—ãŸã‚‰ãƒˆãƒƒãƒ—ã«ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã™ã‚‹
   if @project.save
-    # redirect_to ‚É Path ‚ğ•t‚¯‚é‚±‚Æ‚ÅƒŠƒ_ƒCƒŒƒNƒg‚·‚é
+    # redirect_to ã« Path ã‚’ä»˜ã‘ã‚‹ã“ã¨ã§ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã™ã‚‹
     redirect_to projects_path
   else
-    # Validation ‚É‚æ‚è•Û‘¶‚É¸”s‚µ‚½‚çV‹K“o˜^‰æ–Ê‚ğÄ“xŠJ‚­
+    # Validation ã«ã‚ˆã‚Šä¿å­˜ã«å¤±æ•—ã—ãŸã‚‰æ–°è¦ç™»éŒ²ç”»é¢ã‚’å†åº¦é–‹ã
     render 'new'
   end
 
-‚±‚ê‚Å–¢“ü—Í‚ÌÛ‚ÍV‹K“o˜^‰æ–Ê‚ªÄ•`‰æ‚³‚ê‚é‚æ‚¤‚É‚È‚Á‚½B
+ã“ã‚Œã§æœªå…¥åŠ›ã®éš›ã¯æ–°è¦ç™»éŒ²ç”»é¢ãŒå†æç”»ã•ã‚Œã‚‹ã‚ˆã†ã«ãªã£ãŸã€‚
 
 
 
-# 15 ƒGƒ‰[ƒƒbƒZ[ƒW‚ğ•\¦‚µ‚æ‚¤
+# 15 ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã—ã‚ˆã†
 
-Validation ‚Í‚Å‚«‚½‚ªƒGƒ‰[ƒƒbƒZ[ƒW‚Ì—pˆÓ‚ª‚È‚¢B
-/app/views/projects/new.html.erb ‚ÉˆÈ‰º‚Ì‚æ‚¤‚É’Ç‰ÁB
+Validation ã¯ã§ããŸãŒã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ç”¨æ„ãŒãªã„ã€‚
+/app/views/projects/new.html.erb ã«ä»¥ä¸‹ã®ã‚ˆã†ã«è¿½åŠ ã€‚
 
-  <%# Validation ‚ÅƒGƒ‰[‚É‚È‚Á‚½ê‡Aerrors “à‚É‚»‚Ìî•ñ‚ª“ü‚é %>
+  <%# Validation ã§ã‚¨ãƒ©ãƒ¼ã«ãªã£ãŸå ´åˆã€errors å†…ã«ãã®æƒ…å ±ãŒå…¥ã‚‹ %>
   <% if @project.errors.any? %>
     <%#
-      &lt;%= @project.errors.inspect %&gt; ‚Å’†g‚ª•ª‚©‚éB
+      &lt;%= @project.errors.inspect %&gt; ã§ä¸­èº«ãŒåˆ†ã‹ã‚‹ã€‚
       #&lt;ActiveModel::Errors:0x0000000c8fb428 @base=#&lt;Project id: nil, title: "", created_at: nil, updated_at: nil&gt;, @messages={:title=&gt;["can't be blank"]}&gt;
-      ‚±‚Ì‚æ‚¤‚È‚à‚Ì‚ª“ü‚Á‚Ä‚¢‚é‚Æ•ª‚©‚éB‚»‚±‚ÅA
+      ã“ã®ã‚ˆã†ãªã‚‚ã®ãŒå…¥ã£ã¦ã„ã‚‹ã¨åˆ†ã‹ã‚‹ã€‚ãã“ã§ã€
       &lt;%= @project.errors.messages[:title][0] %&gt;
-      ‚Æ‚·‚é‚±‚Æ‚ÅA@messages “à‚ÌƒL[ :title “à‚Ì”z—ñ‚ÌÅ‰‚ğæ“¾‚Å‚«‚éB
-      ƒƒbƒZ[ƒW‚Í Model ‚Ì Validation •”•ª‚Å•ÏX‚Å‚«‚éB
+      ã¨ã™ã‚‹ã“ã¨ã§ã€@messages å†…ã®ã‚­ãƒ¼ :title å†…ã®é…åˆ—ã®æœ€åˆã‚’å–å¾—ã§ãã‚‹ã€‚
+      ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã¯ Model ã® Validation éƒ¨åˆ†ã§å¤‰æ›´ã§ãã‚‹ã€‚
     %>
     <%= @project.errors.messages[:title][0] %>
   <% end %>
 
-ƒGƒ‰[ƒƒbƒZ[ƒW‚ğ•Ï‚¦‚é‚½‚ß‚É /app/models/project.rb ‚ğC³‚·‚éB
+ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å¤‰ãˆã‚‹ãŸã‚ã« /app/models/project.rb ã‚’ä¿®æ­£ã™ã‚‹ã€‚
 
-  validates :title, presence: { message: "“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B" }
+  validates :title, presence: { message: "å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚" }
 
-ˆÈ‰º‚Ì‚æ‚¤‚É‰ü•Ï‚µ‚Äw’è•¶šˆÈã‚Ì Validation ‚ğ’Ç‰Á’è‹`‚·‚éB
+ä»¥ä¸‹ã®ã‚ˆã†ã«æ”¹å¤‰ã—ã¦æŒ‡å®šæ–‡å­—ä»¥ä¸Šã® Validation ã‚’è¿½åŠ å®šç¾©ã™ã‚‹ã€‚
 
-  # Title ‚Ì Validation
+  # Title ã® Validation
   validates :title,
-    presence: { message: "“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B" },      # •K{“ü—Í
-    length:   { minimum: 3, message: "’Z‚·‚¬‚Ü‚·B"}  # 3•¶šˆÈã (‘SŠp‚à1•¶š‚Æ‚İ‚È‚µ‚Ä‚­‚ê‚é)
+    presence: { message: "å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚" },      # å¿…é ˆå…¥åŠ›
+    length:   { minimum: 3, message: "çŸ­ã™ãã¾ã™ã€‚"}  # 3æ–‡å­—ä»¥ä¸Š (å…¨è§’ã‚‚1æ–‡å­—ã¨ã¿ãªã—ã¦ãã‚Œã‚‹)
