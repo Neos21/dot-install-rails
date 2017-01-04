@@ -42,10 +42,20 @@ class ProjectsController < ApplicationController
   def update
     @project = Project.find(params[:id])
     if @project.update(project_params)
+      # 更新ができたら一覧に戻る
       redirect_to projects_path
     else
+      # 更新に失敗した時は編集画面を再度開く
       render 'edit'
     end
+  end
+  
+  # DestroyAction
+  def destroy
+    @project = Project.find(params[:id])
+    @project.destroy
+    # 一覧に戻る
+    redirect_to projects_path
   end
   
   # プライベート宣言
