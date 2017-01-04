@@ -63,3 +63,117 @@ Controller の重複した記述をなくしていく。
     end
 
 各 Action からは Project.find() の記述を消してしまって良い。
+
+
+
+# 20 Tasks の設定をしていこう
+
+Task は Project の詳細ページの View を利用する。
+
+まずは Model を作る。
+
+  # g = generate
+  # title:string は title と省略可能
+  # done:boolean は完了したかを示す
+  # project:references で Project に紐付いたモデルにできる
+  $ rails g model Task title done:boolean project:references
+  
+  Expected string default value for '--jbuilder'; got true (boolean)
+        invoke  active_record
+        create    db/migrate/20170104143908_create_tasks.rb
+        create    app/models/task.rb
+        invoke    test_unit
+        create      test/models/task_test.rb
+        create      test/fixtures/tasks.yml
+
+生成された Migration ファイル /db/migrate/20170104143908_create_tasks.rb を開き、
+
+  t.boolean :done
+
+の部分を以下のように変更する。
+
+  t.boolean :done, default: false
+
+これで登録時のデフォルト値を false にできる。新規登録時はタスクは完了していないはずなので。
+ここまでできたら以下のコマンドでテーブルを構築する。
+
+  $ rake db:migrate
+  
+  == 20170104143908 CreateTasks: migrating ======================================
+  -- create_table(:tasks)
+     -> 0.5337s
+  == 20170104143908 CreateTasks: migrated (0.5344s) =============================
+
+次にコントローラを作る。
+
+  $ rails g controller Tasks
+  
+  Expected string default value for '--jbuilder'; got true (boolean)
+  Expected string default value for '--helper'; got true (boolean)
+  Expected string default value for '--assets'; got true (boolean)
+        create  app/controllers/tasks_controller.rb
+        invoke  erb
+        create    app/views/tasks
+        invoke  test_unit
+        create    test/controllers/tasks_controller_test.rb
+        invoke  helper
+        create    app/helpers/tasks_helper.rb
+        invoke    test_unit
+        invoke  assets
+        invoke    coffee
+        create      app/assets/javascripts/tasks.coffee
+        invoke    scss
+        create      app/assets/stylesheets/tasks.scss
+
+
+
+# 21 Association の設定をしよう
+
+Task の Model と Controllers を作った。
+Project との関連付けをしていく。
+
+/app/models/task.rb に以下の記述がある。
+
+  belongs_to :project
+
+Model 生成時に project:references と書いたことでこうなる。
+一方、Project の Model には Task との関連が定義されていない状態。
+
+/app/models/project.rb を開き、以下を追加する。
+
+  # Task との関連付け
+  has_many :tasks
+
+続いてルーティングの設定。
+
+/config/routes.rb を開く。
+
+  # プロジェクトのルーティングを自動生成させる
+  resources :projects
+
+この部分を変更する。
+
+  # プロジェクトのルーティングを自動生成させる
+  resources :projects do
+    # タスクに必要な Action は新規作成と削除のみ
+    resources :tasks, only: [:create, :destroy]
+  end
+
+これで rake routes をしてみる。
+
+  $ rake routes
+  
+         Prefix Verb   URI Pattern                               Controller#Action
+  project_tasks POST   /projects/:project_id/tasks(.:format)     tasks#create
+   project_task DELETE /projects/:project_id/tasks/:id(.:format) tasks#destroy
+       projects GET    /projects(.:format)                       projects#index
+                POST   /projects(.:format)                       projects#create
+    new_project GET    /projects/new(.:format)                   projects#new
+   edit_project GET    /projects/:id/edit(.:format)              projects#edit
+        project GET    /projects/:id(.:format)                   projects#show
+                PATCH  /projects/:id(.:format)                   projects#update
+                PUT    /projects/:id(.:format)                   projects#update
+                DELETE /projects/:id(.:format)                   projects#destroy
+           root GET    /                                         projects#index
+
+先頭2つの Task に関するルーティングができている。

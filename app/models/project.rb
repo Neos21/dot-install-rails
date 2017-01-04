@@ -1,5 +1,8 @@
 class Project < ActiveRecord::Base
   
+  # Task との関連付け
+  has_many :tasks
+  
   # Title の Validation
   validates :title,
     presence: { message: "入力してください。" },      # 必須入力

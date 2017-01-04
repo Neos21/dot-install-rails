@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   
   # プロジェクトのルーティングを自動生成させる
-  resources :projects
+  resources :projects do
+    # タスクに必要な Action は新規作成と削除のみ
+    resources :tasks, only: [:create, :destroy]
+  end
   
   # ルートのアクションを対応付ける
   root 'projects#index'
