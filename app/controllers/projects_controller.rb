@@ -1,5 +1,11 @@
 class ProjectsController < ApplicationController
   
+  # before_action : 全てのアクションの手前に行われる共通関数を定義する
+  # 「only:」で対象のアクションを限定できる。
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  
+  # after_action もアルヨ
+  
   # IndexAction を作る
   def index
     # @projects は View で使用する変数
@@ -9,9 +15,6 @@ class ProjectsController < ApplicationController
   
   # ShowAction
   def show
-    # URL で渡された値は params[シンボル] で取得可能
-    # シンボル :id は rake routes で確認できる URI Pattern にて定義されている
-    @project = Project.find(params[:id])
   end
   
   # NewAction
@@ -35,12 +38,10 @@ class ProjectsController < ApplicationController
   
   # EditAction
   def edit
-    @project = Project.find(params[:id])
   end
   
   # UpdateAction
   def update
-    @project = Project.find(params[:id])
     if @project.update(project_params)
       # 更新ができたら一覧に戻る
       redirect_to projects_path
@@ -52,7 +53,6 @@ class ProjectsController < ApplicationController
   
   # DestroyAction
   def destroy
-    @project = Project.find(params[:id])
     @project.destroy
     # 一覧に戻る
     redirect_to projects_path
@@ -64,6 +64,15 @@ class ProjectsController < ApplicationController
     def project_params
       # params 中の project の中にある title の受取を許可する
       params[:project].permit(:title)
+    end
+    
+    # before_action で定義した共通関数
+    def set_project
+      # :show, :edit, :update:, :destroy で共通していた前処理を集約する
+      
+      # URL で渡された値は params[シンボル] で取得可能
+      # シンボル :id は rake routes で確認できる URI Pattern にて定義されている
+      @project = Project.find(params[:id])
     end
   
 end

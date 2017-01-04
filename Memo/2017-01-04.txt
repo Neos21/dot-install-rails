@@ -32,3 +32,34 @@ rake routes で確認できるとおり、Prefix は project、Verb が DELETE �
     # 一覧に戻る
     redirect_to projects_path
   end
+
+
+
+# 19 Before_Action を使ってみよう
+
+Controller の重複した記述をなくしていく。
+
+  @project = Project.find(params[:id])
+
+という記述が show, edit, update, destroy Action で共通して登場するので、これを1つにまとめる。
+
+/app/controllers/projects_controller.rb の先頭の方に以下を追加。
+
+  # before_action : 全てのアクションの手前に行われる共通関数を定義する
+  # 「only:」で対象のアクションを限定できる。
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
+
+次に private で set_project 関数を作る。
+
+  # プライベート宣言
+  private
+    # before_action で定義した共通関数
+    def set_project
+      # :show, :edit, :update:, :destroy で共通していた前処理を集約する
+      
+      # URL で渡された値は params[シンボル] で取得可能
+      # シンボル :id は rake routes で確認できる URI Pattern にて定義されている
+      @project = Project.find(params[:id])
+    end
+
+各 Action からは Project.find() の記述を消してしまって良い。
