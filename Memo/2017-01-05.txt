@@ -1,0 +1,32 @@
+2017-01-05
+
+
+
+# 23 Tasks を保存していこう
+
+tasks#create を作る。
+Form から受け取れるのは :project_id なので、これを基に Task を登録する。
+
+/app/controllers/tasks_controller.rb に def create を追加する。
+
+  # CreateAction
+  def create
+    # 新規登録する Task に紐付く Project を取得する
+    @project = Project.find(params[:project_id])
+    # パラメータを基に Task を作る
+    @task = @project.tasks.create(task_params)
+    # Project の詳細画面を表示する
+    redirect_to project_path(@project.id)
+  end
+  
+  private
+    # 受け取るパラメータを private で定義しておく
+    def task_params
+      params[:task].permit(:title)
+    end
+
+ついでに空欄での登録を許容しないよう Validate を追加しておく。
+/app/models/task.rb に以下を追加。
+
+  # Title の空欄登録を許容しない
+  validates :title, presence: true
