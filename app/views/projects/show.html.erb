@@ -5,7 +5,15 @@
 <ul>
   <%# 一覧をループで回して表示する %>
   <% @project.tasks.each do |task| %>
-    <li><%= task.title %></li>
+    <li>
+      <%= task.title %>
+      <%# タスクの削除 %>
+      <%= link_to "[Delete]", project_task_path(task.project_id, task.id), method: :delete,
+        data: {
+          confirm: "Are you sure?"
+        }
+      %>
+    </li>
   <% end %>
   <%# 新規作成フォーム %>
   <li>

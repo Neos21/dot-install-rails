@@ -12,6 +12,14 @@ class TasksController < ApplicationController
     redirect_to project_path(@project.id)
   end
   
+  # DestroyAction
+  def destroy
+    @task = Task.find(params[:id])
+    @task.destroy
+    
+    redirect_to project_path(params[:project_id])
+  end
+  
   private
     
     # 受け取るパラメータを private で定義しておく

@@ -30,3 +30,26 @@ Form から受け取れるのは :project_id なので、これを基に Task �
 
   # Title の空欄登録を許容しない
   validates :title, presence: true
+
+
+
+# 24 Tasks の削除をしてみよう
+
+/app/views/projects/show.html.erb に削除リンクを追加する。
+
+  <%# タスクの削除 %>
+  <%= link_to "[Delete]", project_task_path(task.project_id, task.id), method: :delete,
+    data: {
+      confirm: "Are you sure?"
+    }
+  %>
+
+次に /app/controllers/tasks_controller.rb に destroy を追加する。
+
+  # DestroyAction
+  def destroy
+    @task = Task.find(params[:id])
+    @task.destroy
+    
+    redirect_to project_path(params[:project_id])
+  end
