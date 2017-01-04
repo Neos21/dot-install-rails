@@ -53,3 +53,25 @@ Form から受け取れるのは :project_id なので、これを基に Task �
     
     redirect_to project_path(params[:project_id])
   end
+
+
+
+# 25 Check Box Tag を使おう
+
+/app/views/projects/show.html.erb に完了チェックボックスを付ける。
+
+  <%# 完了チェックボックス %>
+  <%= check_box_tag '', '', task.done, {'data-id' => task.id, 'data-project_id' => task.project_id} %>
+
+check_box_tag は単なるチェックボックスを生成する。第1・第2引数は今回不要なので空欄。チェック状況を判断する変数は task.done をそのまま渡す。
+data 属性は jQuery での Ajax 操作のために用意しておく。
+
+  <script>
+    $(function() {
+      // 完了チェックボックスの変更に合わせて Ajax 通信を行う
+      $("input[type='checkbox']").on("click", function() {
+        // 「xxx」部分をこれから作るヨ
+        $.post("/projects/xxx/tasks/xxx/toggle");
+      });
+    });
+  </script>

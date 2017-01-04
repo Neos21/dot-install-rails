@@ -6,6 +6,9 @@
   <%# 一覧をループで回して表示する %>
   <% @project.tasks.each do |task| %>
     <li>
+      <%# 完了チェックボックス %>
+      <%= check_box_tag '', '', task.done, {'data-id' => task.id, 'data-project_id' => task.project_id} %>
+      <%# タスク名 %>
       <%= task.title %>
       <%# タスクの削除 %>
       <%= link_to "[Delete]", project_task_path(task.project_id, task.id), method: :delete,
@@ -23,3 +26,13 @@
     <% end %>
   </li>
 </ul>
+
+<script>
+  $(function() {
+    // 完了チェックボックスの変更に合わせて Ajax 通信を行う
+    $("input[type='checkbox']").on("click", function() {
+      // 「xxx」部分をこれから作るヨ
+      $.post("/projects/xxx/tasks/xxx/toggle");
+    });
+  });
+</script>
