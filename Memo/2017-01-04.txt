@@ -177,3 +177,26 @@ Model 生成時に project:references と書いたことでこうなる。
            root GET    /                                         projects#index
 
 先頭2つの Task に関するルーティングができている。
+
+
+
+# 22 Tasks の新規作成フォームを作ろう
+
+/app/views/projects/show.html.erb に Task の一覧表示部分を作る。
+
+  <%# Task の一覧 %>
+  <ul>
+    <%# 一覧をループで回して表示する %>
+    <% @project.tasks.each do |task| %>
+      <li><%= task.title %></li>
+    <% end %>
+    <%# 新規作成フォーム %>
+    <li>
+      <%= form_for [@project, @project.tasks.build] do |f| %>
+        <%= f.text_field :title %>
+        <%= f.submit %>
+      <% end %>
+    </li>
+  </ul>
+
+form_for 部分は決まり文句的に覚える。
