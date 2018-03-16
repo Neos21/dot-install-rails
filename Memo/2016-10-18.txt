@@ -11,7 +11,7 @@ $ rails -v
 Rails 4.2.5
 
 # GitHub リポジトリを作って git clone することでフォルダを作っておく。
-$ git clone https://github.com/Neos21GitHub/DotInstallRails.git
+$ git clone https://github.com/Neos21/DotInstallRails.git
 
 # P:/Dev/Ruby/GitHub/DotInstallRails/ という構成になっている。
 # GitHub フォルダ上で以下のコマンドで Rails アプリを作る。
