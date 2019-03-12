@@ -1,4 +1,4 @@
-# DotInstallRails
+# Dot Install Rails
 
 ドットインストールの Ruby On Rails 4 入門をやってみます。
 
